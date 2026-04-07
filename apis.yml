@@ -1,7 +1,11 @@
 aid: aol
-url: https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml
+url: 
+  https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml
 modified: '2026-03-23'
 apis: []
 common:
   - type: Website
     url: https://www.aol.com
+description: >-
+  Discover the latest breaking news in the U.S. and around the world — politics, weather,
+  entertainment, lifestyle, finance, sports and much more.
