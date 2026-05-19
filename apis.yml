@@ -45,6 +45,10 @@ maintainers:
     X: apievangelist
     url: https://apievangelist.com
 common:
+  - type: GitHubOrganization
+    url: https://github.com/aol
+  - type: LinkedIn
+    url: https://www.linkedin.com/company/aol
   - type: Portal
     url: https://www.aol.com
   - type: TermsOfService
