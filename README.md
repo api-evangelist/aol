@@ -1,13 +1,15 @@
 # AOL (aol)
-AOL (America Online) is a digital media company and a division of Verizon Media (now Yahoo). AOL operates news and entertainment properties. Historically, AOL provided developer APIs that have since been consolidated into the Yahoo Developer Network ecosystem.
 
-**URL:** [Visit APIs.json](https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml)
+AOL (America Online) is a digital media company and a division of Verizon Media (now Yahoo). AOL operates news and entertainment properties including AOL.com, Engadget, and TechCrunch. Historically, AOL provided developer APIs for advertising, content, and identity services that have since been consolidated into the Yahoo/Verizon Media API ecosystem.
 
-**Run:** [Capabilities Using Naftiko](https://github.com/naftiko/fleet?utm_source=api-evangelist&utm_medium=readme&utm_campaign=company-api-evangelist&utm_content=repo)
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml)
 
-## Tags:
+## Tags
 
- - Advertising, Digital Media, Entertainment, News
+- Advertising
+- Digital Media
+- Entertainment
+- News
 
 ## Timestamps
 
@@ -17,27 +19,35 @@ AOL (America Online) is a digital media company and a division of Verizon Media 
 ## APIs
 
 ### Yahoo Developer Network (formerly AOL Developer)
-Following AOL's acquisition by Verizon and subsequent merger with Yahoo, AOL developer APIs have been consolidated into the Yahoo Developer Network. APIs provide access to advertising, weather, finance, search, and identity services.
 
-**Human URL:** [https://developer.yahoo.com](https://developer.yahoo.com)
+Following AOL's acquisition by Verizon and subsequent merger with Yahoo, AOL developer APIs have been consolidated into the Yahoo Developer Network. Yahoo/AOL APIs provide access to advertising services, weather, finance, search, and identity services for developers building on the Oath/Verizon Media platform.
 
-#### Tags:
+- **Human URL:** [https://developer.yahoo.com](https://developer.yahoo.com)
+- **Base URL:** `https://api.yahoo.com`
 
- - Advertising, Digital Media, Yahoo
+#### Tags
+
+- Advertising
+- Digital Media
+- Yahoo
 
 #### Properties
 
 - [Documentation](https://developer.yahoo.com/)
-- [GettingStarted](https://developer.yahoo.com/oauth2/guide/openid_connect/)
+- [Getting Started](https://developer.yahoo.com/oauth2/guide/openid_connect/)
+- [Postman Collection](collections/aol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
+- [Open Collection](collections/aol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
 
 ## Common Properties
 
+- [GitHub Organization](https://github.com/aol)
+- [LinkedIn](https://www.linkedin.com/company/aol)
 - [Portal](https://www.aol.com)
-- [TermsOfService](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html)
-- [PrivacyPolicy](https://legal.yahoo.com/us/en/yahoo/privacy/index.html)
+- [Terms of Service](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html)
+- [Privacy Policy](https://legal.yahoo.com/us/en/yahoo/privacy/index.html)
 
 ## Maintainers
 
 **FN:** Kin Lane
-
 **Email:** info@apievangelist.com
+**URL:** https://apievangelist.com
