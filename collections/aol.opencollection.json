@@ -1,0 +1,146 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Yahoo (formerly AOL) OAuth 2.0 and OpenID Connect API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OAuth2",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Authorization request",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.login.yahoo.com/oauth2/request_auth",
+            "params": [
+              {
+                "name": "client_id",
+                "value": "",
+                "type": "query",
+                "description": "Consumer Key issued when registering an app at developer.yahoo.com"
+              },
+              {
+                "name": "redirect_uri",
+                "value": "",
+                "type": "query",
+                "description": "URI Yahoo will redirect to after the user authorizes the app"
+              },
+              {
+                "name": "response_type",
+                "value": "",
+                "type": "query",
+                "description": "Must be `code` for the Authorization Code grant"
+              },
+              {
+                "name": "scope",
+                "value": "",
+                "type": "query",
+                "description": "Space-separated OpenID Connect scopes (for example `openid profile email`)"
+              },
+              {
+                "name": "state",
+                "value": "",
+                "type": "query",
+                "description": "Opaque value returned unchanged on the redirect; use to prevent CSRF"
+              },
+              {
+                "name": "language",
+                "value": "",
+                "type": "query",
+                "description": "Language identifier for the Yahoo authorization UI"
+              }
+            ]
+          },
+          "docs": "Redirects the user to Yahoo's authorization page where the user\nauthenticates and grants the requesting application access. On\nsuccess Yahoo redirects back to `redirect_uri` with a `code`\nquery parameter that can be exchanged at the token endpoint.\n"
+        },
+        {
+          "info": {
+            "name": "Token exchange and refresh",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.login.yahoo.com/oauth2/get_token",
+            "body": {
+              "type": "form-urlencoded",
+              "data": [
+                {
+                  "name": "client_id",
+                  "value": ""
+                },
+                {
+                  "name": "client_secret",
+                  "value": ""
+                },
+                {
+                  "name": "redirect_uri",
+                  "value": ""
+                },
+                {
+                  "name": "grant_type",
+                  "value": ""
+                },
+                {
+                  "name": "code",
+                  "value": ""
+                },
+                {
+                  "name": "refresh_token",
+                  "value": ""
+                }
+              ]
+            },
+            "auth": {
+              "type": "basic",
+              "username": "{{username}}",
+              "password": "{{password}}"
+            }
+          },
+          "docs": "Exchanges an authorization code for access and refresh tokens, or\nexchanges a refresh token for a new access token. The `grant_type`\nparameter selects the behaviour. Client credentials may be passed\nin the body or in an `Authorization: Basic` header with\nbase64-encoded `client_id:client_secret`.\n"
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "OpenID Connect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OpenID Connect UserInfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.login.yahoo.com/openid/v1/userinfo",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns claims about the authenticated end user. The request must\ncarry a valid OAuth 2.0 access token issued with the `openid`\nscope as a Bearer token.\n"
+        },
+        {
+          "info": {
+            "name": "JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.login.yahoo.com/openid/v1/certs"
+          },
+          "docs": "Returns the JWKS used to verify Yahoo-issued ID tokens. Clients\nshould cache the keys and rotate based on `kid` values present in\nthe ID token header.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
