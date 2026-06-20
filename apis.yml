@@ -5,7 +5,7 @@ description: >-
   AOL.com, Engadget, and TechCrunch. Historically, AOL provided developer APIs
   for advertising, content, and identity services that have since been
   consolidated into the Yahoo/Verizon Media API ecosystem.
-image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
 url: https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml
 created: "2026-03-23"
 modified: "2026-04-19"
@@ -24,7 +24,7 @@ apis:
       Yahoo/AOL APIs provide access to advertising services, weather, finance,
       search, and identity services for developers building on the Oath/Verizon
       Media platform.
-    image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
+    image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
     humanURL: https://developer.yahoo.com
     baseURL: https://api.yahoo.com
     tags:
