@@ -1,0 +1,29 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/aol-openapi.yml
+schemes:
+- name: oauth2
+  source: openapi/aol-openapi.yml
+  flows:
+  - flow: authorizationCode
+    authorizationUrl: https://api.login.yahoo.com/oauth2/request_auth
+    tokenUrl: https://api.login.yahoo.com/oauth2/get_token
+scopes:
+- scope: email
+  description: Email address
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aol-openapi.yml
+- scope: openid
+  description: OpenID Connect authentication
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aol-openapi.yml
+- scope: profile
+  description: Basic profile information
+  flows:
+  - authorizationCode
+  sources:
+  - openapi/aol-openapi.yml

@@ -46,6 +46,8 @@ maintainers:
     X: apievangelist
     url: https://apievangelist.com
 common:
+  - type: OAuthScopes
+    url: scopes/aol-scopes.yml
   - type: GitHubOrganization
     url: https://github.com/aol
   - type: LinkedIn
