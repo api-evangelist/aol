@@ -46,6 +46,12 @@ maintainers:
     X: apievangelist
     url: https://apievangelist.com
 common:
+  - type: VulnerabilityDisclosure
+    url: security/aol-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/aol-domain-security.yml
+  - type: Authentication
+    url: authentication/aol-authentication.yml
   - type: OAuthScopes
     url: scopes/aol-scopes.yml
   - type: GitHubOrganization
