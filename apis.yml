@@ -46,6 +46,8 @@ maintainers:
     X: apievangelist
     url: https://apievangelist.com
 common:
+  - type: AgenticAccess
+    url: agentic-access/aol-agentic-access.yml
   - type: VulnerabilityDisclosure
     url: security/aol-vulnerability-disclosure.yml
   - type: DomainSecurity
