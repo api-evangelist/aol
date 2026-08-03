@@ -1,0 +1,16 @@
+{
+  "provider": "aol",
+  "sources": [
+    "aol-oauth2-api-openapi.yml",
+    "aol-openid-connect-api-openapi.yml"
+  ],
+  "outputs": [
+    "aol-oauth2-api-openapi.yml",
+    "aol-openid-connect-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}

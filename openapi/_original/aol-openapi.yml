@@ -1,0 +1,266 @@
+openapi: 3.1.0
+info:
+  title: Yahoo (formerly AOL) OAuth 2.0 and OpenID Connect API
+  description: |
+    Yahoo OAuth 2.0 and OpenID Connect endpoints used by developers building on
+    the Yahoo / former AOL identity platform. Following AOL's acquisition by
+    Verizon and merger with Yahoo, AOL developer identity APIs have been
+    consolidated into the Yahoo Developer Network. The OAuth 2.0 Authorization
+    Code grant is the supported flow; OpenID Connect adds a userinfo endpoint
+    and a JWKS endpoint exposed at api.login.yahoo.com.
+
+    This specification is generated from the public Yahoo Developer Network
+    OAuth 2.0 / OpenID Connect documentation and the OpenID Connect discovery
+    document at https://login.yahoo.com/.well-known/openid-configuration.
+  version: "1.0.0"
+  contact:
+    name: Yahoo Developer Support
+    url: https://developer.yahoo.com/forum/
+  license:
+    name: Yahoo Terms of Service
+    url: https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html
+servers:
+  - url: https://api.login.yahoo.com
+    description: Yahoo identity / OAuth 2.0 / OpenID Connect server
+tags:
+  - name: OAuth2
+    description: OAuth 2.0 Authorization Code grant endpoints
+  - name: OpenID Connect
+    description: OpenID Connect userinfo and JWKS endpoints
+paths:
+  /oauth2/request_auth:
+    get:
+      tags:
+        - OAuth2
+      summary: Authorization request
+      description: |
+        Redirects the user to Yahoo's authorization page where the user
+        authenticates and grants the requesting application access. On
+        success Yahoo redirects back to `redirect_uri` with a `code`
+        query parameter that can be exchanged at the token endpoint.
+      operationId: requestAuth
+      parameters:
+        - name: client_id
+          in: query
+          required: true
+          description: Consumer Key issued when registering an app at developer.yahoo.com
+          schema:
+            type: string
+        - name: redirect_uri
+          in: query
+          required: true
+          description: URI Yahoo will redirect to after the user authorizes the app
+          schema:
+            type: string
+            format: uri
+        - name: response_type
+          in: query
+          required: true
+          description: Must be `code` for the Authorization Code grant
+          schema:
+            type: string
+            enum:
+              - code
+        - name: scope
+          in: query
+          required: false
+          description: Space-separated OpenID Connect scopes (for example `openid profile email`)
+          schema:
+            type: string
+        - name: state
+          in: query
+          required: false
+          description: Opaque value returned unchanged on the redirect; use to prevent CSRF
+          schema:
+            type: string
+        - name: language
+          in: query
+          required: false
+          description: Language identifier for the Yahoo authorization UI
+          schema:
+            type: string
+            default: en-us
+      responses:
+        '302':
+          description: Redirect to the configured `redirect_uri` with `code` and `state` query parameters on success, or with `error` on failure.
+  /oauth2/get_token:
+    post:
+      tags:
+        - OAuth2
+      summary: Token exchange and refresh
+      description: |
+        Exchanges an authorization code for access and refresh tokens, or
+        exchanges a refresh token for a new access token. The `grant_type`
+        parameter selects the behaviour. Client credentials may be passed
+        in the body or in an `Authorization: Basic` header with
+        base64-encoded `client_id:client_secret`.
+      operationId: getToken
+      security:
+        - basicAuth: []
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              required:
+                - client_id
+                - client_secret
+                - redirect_uri
+                - grant_type
+              properties:
+                client_id:
+                  type: string
+                  description: Consumer Key
+                client_secret:
+                  type: string
+                  description: Consumer Secret
+                redirect_uri:
+                  type: string
+                  format: uri
+                  description: Same redirect URI used in the authorization request
+                grant_type:
+                  type: string
+                  enum:
+                    - authorization_code
+                    - refresh_token
+                  description: Selects code exchange or refresh-token exchange
+                code:
+                  type: string
+                  description: Authorization code returned from /oauth2/request_auth (required when grant_type=authorization_code)
+                refresh_token:
+                  type: string
+                  description: Previously issued refresh token (required when grant_type=refresh_token)
+      responses:
+        '200':
+          description: Token response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenResponse'
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Invalid client authentication
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /openid/v1/userinfo:
+    get:
+      tags:
+        - OpenID Connect
+      summary: OpenID Connect UserInfo
+      description: |
+        Returns claims about the authenticated end user. The request must
+        carry a valid OAuth 2.0 access token issued with the `openid`
+        scope as a Bearer token.
+      operationId: getUserInfo
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: User claims
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserInfo'
+        '401':
+          description: Missing or invalid bearer token
+  /openid/v1/certs:
+    get:
+      tags:
+        - OpenID Connect
+      summary: JSON Web Key Set
+      description: |
+        Returns the JWKS used to verify Yahoo-issued ID tokens. Clients
+        should cache the keys and rotate based on `kid` values present in
+        the ID token header.
+      operationId: getJwks
+      responses:
+        '200':
+          description: JSON Web Key Set
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  keys:
+                    type: array
+                    items:
+                      type: object
+components:
+  securitySchemes:
+    basicAuth:
+      type: http
+      scheme: basic
+      description: HTTP Basic authentication with base64-encoded `client_id:client_secret`
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+      description: OAuth 2.0 Bearer access token
+    oauth2:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: https://api.login.yahoo.com/oauth2/request_auth
+          tokenUrl: https://api.login.yahoo.com/oauth2/get_token
+          scopes:
+            openid: OpenID Connect authentication
+            profile: Basic profile information
+            email: Email address
+  schemas:
+    TokenResponse:
+      type: object
+      properties:
+        access_token:
+          type: string
+        token_type:
+          type: string
+          example: bearer
+        expires_in:
+          type: integer
+          description: Lifetime of the access token in seconds
+        refresh_token:
+          type: string
+        id_token:
+          type: string
+          description: Signed JWT ID token (when the `openid` scope is requested)
+        xoauth_yahoo_guid:
+          type: string
+          description: Yahoo GUID of the authenticated user
+    UserInfo:
+      type: object
+      description: OpenID Connect standard claims returned by Yahoo
+      properties:
+        sub:
+          type: string
+        name:
+          type: string
+        given_name:
+          type: string
+        family_name:
+          type: string
+        email:
+          type: string
+          format: email
+        email_verified:
+          type: boolean
+        locale:
+          type: string
+        profile_images:
+          type: object
+          additionalProperties:
+            type: string
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
