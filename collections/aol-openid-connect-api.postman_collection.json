@@ -1,0 +1,237 @@
+{
+  "item": [
+    {
+      "id": "311636ef-753c-4b00-99a9-62d96d0542f5",
+      "name": "OpenID Connect",
+      "description": {
+        "content": "OpenID Connect userinfo and JWKS endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "ca5d1563-2de6-4e9f-a46a-becfe509be12",
+          "name": "OpenID Connect UserInfo",
+          "request": {
+            "name": "OpenID Connect UserInfo",
+            "description": {
+              "content": "Returns claims about the authenticated end user. The request must\ncarry a valid OAuth 2.0 access token issued with the `openid`\nscope as a Bearer token.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openid",
+                "v1",
+                "userinfo"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bfa8ce1f-ca53-4927-bfc4-0bee82d63597",
+              "name": "User claims",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openid",
+                    "v1",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"sub\": \"string\",\n  \"name\": \"string\",\n  \"given_name\": \"string\",\n  \"family_name\": \"string\",\n  \"email\": \"U-Kf@vSTyNonhCdvHZ.cugu\",\n  \"email_verified\": false,\n  \"locale\": \"string\",\n  \"profile_images\": {\n    \"key_0\": \"string\",\n    \"key_1\": \"string\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "6a9510e4-f598-4f60-858c-defe32b58a27",
+              "name": "Missing or invalid bearer token",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openid",
+                    "v1",
+                    "userinfo"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6aad5dec-3a3c-47cd-b770-28e2c19a7623",
+          "name": "JSON Web Key Set",
+          "request": {
+            "name": "JSON Web Key Set",
+            "description": {
+              "content": "Returns the JWKS used to verify Yahoo-issued ID tokens. Clients\nshould cache the keys and rotate based on `kid` values present in\nthe ID token header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "openid",
+                "v1",
+                "certs"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "d7066844-bc53-4074-bb0d-7af140df2b6d",
+              "name": "JSON Web Key Set",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "openid",
+                    "v1",
+                    "certs"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.login.yahoo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "00ec311e-3f53-4491-80fa-b07e40823c1e",
+    "name": "Yahoo (formerly AOL) OAuth 2.0 and OAuth2 OpenID Connect API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Yahoo OAuth 2.0 and OpenID Connect endpoints used by developers building on\nthe Yahoo / former AOL identity platform. Following AOL's acquisition by\nVerizon and merger with Yahoo, AOL developer identity APIs have been\nconsolidated into the Yahoo Developer Network. The OAuth 2.0 Authorization\nCode grant is the supported flow; OpenID Connect adds a userinfo endpoint\nand a JWKS endpoint exposed at api.login.yahoo.com.\n\nThis specification is generated from the public Yahoo Developer Network\nOAuth 2.0 / OpenID Connect documentation and the OpenID Connect discovery\ndocument at https://login.yahoo.com/.well-known/openid-configuration.\n\n\nContact Support:\n Name: Yahoo Developer Support",
+      "type": "text/plain"
+    }
+  }
+}

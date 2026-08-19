@@ -1,0 +1,44 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Yahoo (formerly AOL) OAuth 2.0 and OAuth2 OpenID Connect API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "OpenID Connect",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "OpenID Connect UserInfo",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.login.yahoo.com/openid/v1/userinfo",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Returns claims about the authenticated end user. The request must\ncarry a valid OAuth 2.0 access token issued with the `openid`\nscope as a Bearer token.\n"
+        },
+        {
+          "info": {
+            "name": "JSON Web Key Set",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.login.yahoo.com/openid/v1/certs"
+          },
+          "docs": "Returns the JWKS used to verify Yahoo-issued ID tokens. Clients\nshould cache the keys and rotate based on `kid` values present in\nthe ID token header.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

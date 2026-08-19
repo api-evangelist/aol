@@ -1,0 +1,553 @@
+{
+  "item": [
+    {
+      "id": "1b9b96e8-dd37-42df-b014-33e1e25de7d1",
+      "name": "OAuth2",
+      "description": {
+        "content": "OAuth 2.0 Authorization Code grant endpoints",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "80570acd-3f4c-4e7d-b67e-6109685bf63f",
+          "name": "Authorization request",
+          "request": {
+            "name": "Authorization request",
+            "description": {
+              "content": "Redirects the user to Yahoo's authorization page where the user\nauthenticates and grants the requesting application access. On\nsuccess Yahoo redirects back to `redirect_uri` with a `code`\nquery parameter that can be exchanged at the token endpoint.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth2",
+                "request_auth"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) Consumer Key issued when registering an app at developer.yahoo.com"
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "(Required) URI Yahoo will redirect to after the user authorizes the app"
+                },
+                {
+                  "disabled": false,
+                  "key": "response_type",
+                  "value": "<string>",
+                  "description": "(Required) Must be `code` for the Authorization Code grant"
+                },
+                {
+                  "disabled": false,
+                  "key": "scope",
+                  "value": "<string>",
+                  "description": "Space-separated OpenID Connect scopes (for example `openid profile email`)"
+                },
+                {
+                  "disabled": false,
+                  "key": "state",
+                  "value": "<string>",
+                  "description": "Opaque value returned unchanged on the redirect; use to prevent CSRF"
+                },
+                {
+                  "disabled": false,
+                  "key": "language",
+                  "value": "en-us",
+                  "description": "Language identifier for the Yahoo authorization UI"
+                }
+              ],
+              "variable": []
+            },
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "75462d2c-6af5-4682-9b70-09efe1c26426",
+              "name": "Redirect to the configured `redirect_uri` with `code` and `state` query parameters on success, or with `error` on failure.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "request_auth"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "key": "response_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "scope",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "state",
+                      "value": "<string>"
+                    },
+                    {
+                      "key": "language",
+                      "value": "en-us"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Found",
+              "code": 302,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "30484b81-c448-4be1-8383-7b69385c74a5",
+          "name": "Token exchange and refresh",
+          "request": {
+            "name": "Token exchange and refresh",
+            "description": {
+              "content": "Exchanges an authorization code for access and refresh tokens, or\nexchanges a refresh token for a new access token. The `grant_type`\nparameter selects the behaviour. Client credentials may be passed\nin the body or in an `Authorization: Basic` header with\nbase64-encoded `client_id:client_secret`.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "oauth2",
+                "get_token"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/x-www-form-urlencoded"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "username",
+                  "value": "{{basicAuthUsername}}"
+                },
+                {
+                  "key": "password",
+                  "value": "{{basicAuthPassword}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "urlencoded",
+              "urlencoded": [
+                {
+                  "disabled": false,
+                  "key": "client_id",
+                  "value": "<string>",
+                  "description": "(Required) Consumer Key"
+                },
+                {
+                  "disabled": false,
+                  "key": "client_secret",
+                  "value": "<string>",
+                  "description": "(Required) Consumer Secret"
+                },
+                {
+                  "disabled": false,
+                  "key": "redirect_uri",
+                  "value": "<uri>",
+                  "description": "(Required) Same redirect URI used in the authorization request"
+                },
+                {
+                  "disabled": false,
+                  "key": "grant_type",
+                  "value": "<string>",
+                  "description": "(Required) Selects code exchange or refresh-token exchange"
+                },
+                {
+                  "disabled": false,
+                  "key": "code",
+                  "value": "<string>",
+                  "description": "Authorization code returned from /oauth2/request_auth (required when grant_type=authorization_code)"
+                },
+                {
+                  "disabled": false,
+                  "key": "refresh_token",
+                  "value": "<string>",
+                  "description": "Previously issued refresh token (required when grant_type=refresh_token)"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "16f5ce31-f6b7-4dda-9654-7a2ebf76f848",
+              "name": "Token response",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "get_token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Consumer Key",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Consumer Secret",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Same redirect URI used in the authorization request",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Selects code exchange or refresh-token exchange",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code returned from /oauth2/request_auth (required when grant_type=authorization_code)",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Previously issued refresh token (required when grant_type=refresh_token)",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"access_token\": \"string\",\n  \"token_type\": \"bearer\",\n  \"expires_in\": 2088,\n  \"refresh_token\": \"string\",\n  \"id_token\": \"string\",\n  \"xoauth_yahoo_guid\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4490cae0-8645-4955-aa3c-cbc43293b146",
+              "name": "Invalid request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "get_token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Consumer Key",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Consumer Secret",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Same redirect URI used in the authorization request",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Selects code exchange or refresh-token exchange",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code returned from /oauth2/request_auth (required when grant_type=authorization_code)",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Previously issued refresh token (required when grant_type=refresh_token)",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e247a9fc-90d1-48b5-8ae8-d1111b148384",
+              "name": "Invalid client authentication",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "oauth2",
+                    "get_token"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: basic",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Basic <credentials>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "urlencoded",
+                  "urlencoded": [
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Consumer Key",
+                        "type": "text/plain"
+                      },
+                      "key": "client_id",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Consumer Secret",
+                        "type": "text/plain"
+                      },
+                      "key": "client_secret",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Same redirect URI used in the authorization request",
+                        "type": "text/plain"
+                      },
+                      "key": "redirect_uri",
+                      "value": "<uri>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "(Required) Selects code exchange or refresh-token exchange",
+                        "type": "text/plain"
+                      },
+                      "key": "grant_type",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Authorization code returned from /oauth2/request_auth (required when grant_type=authorization_code)",
+                        "type": "text/plain"
+                      },
+                      "key": "code",
+                      "value": "<string>"
+                    },
+                    {
+                      "disabled": false,
+                      "description": {
+                        "content": "Previously issued refresh token (required when grant_type=refresh_token)",
+                        "type": "text/plain"
+                      },
+                      "key": "refresh_token",
+                      "value": "<string>"
+                    }
+                  ]
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"error\": \"string\",\n  \"error_description\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.login.yahoo.com",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "53da8a62-bcfa-4f29-b3f1-5b124f6dd27b",
+    "name": "Yahoo (formerly AOL) OAuth 2.0 and OpenID Connect OAuth2 API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "Yahoo OAuth 2.0 and OpenID Connect endpoints used by developers building on\nthe Yahoo / former AOL identity platform. Following AOL's acquisition by\nVerizon and merger with Yahoo, AOL developer identity APIs have been\nconsolidated into the Yahoo Developer Network. The OAuth 2.0 Authorization\nCode grant is the supported flow; OpenID Connect adds a userinfo endpoint\nand a JWKS endpoint exposed at api.login.yahoo.com.\n\nThis specification is generated from the public Yahoo Developer Network\nOAuth 2.0 / OpenID Connect documentation and the OpenID Connect discovery\ndocument at https://login.yahoo.com/.well-known/openid-configuration.\n\n\nContact Support:\n Name: Yahoo Developer Support",
+      "type": "text/plain"
+    }
+  }
+}
