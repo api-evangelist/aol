@@ -1,0 +1,67 @@
+generated: '2026-09-02'
+method: probed
+source: live GET of the named /.well-known/ path list on every AOL + spec host
+note: >-
+  Probed the named path list (never a glob) on the AOL web host, the AOL identity
+  host named by AOL's own OpenID Connect discovery document, and the legacy
+  Yahoo identity/docs hosts carried by this repo's OpenAPI servers[] blocks.
+  Two real documents were served, both by AOL-controlled hosts: an RFC 9116
+  security.txt at www.aol.com and a full OpenID Connect discovery document at
+  api.login.aol.com (issuer "https://api.login.aol.com"). www.aol.com answers
+  every other /.well-known/ path with a Next.js 404 error shell, so those are
+  recorded as misses, not as SPA false positives.
+hosts:
+- host: www.aol.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    file: well-known/aol-security.txt
+    content_type: text/plain; charset=utf-8
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+  - path: /.well-known/aauth-resource.json
+    status: 404
+- host: api.login.aol.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    file: well-known/aol-openid-configuration.json
+    content_type: application/json
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+- host: login.aol.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 403
+- host: developer.yahoo.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /llms.txt
+    status: 404
+- host: api.login.yahoo.com
+  documents:
+  - path: /.well-known/openid-configuration
+    status: 200
+    note: >-
+      Served by Yahoo Inc., not by AOL. Recorded for completeness because this
+      repo's OpenAPI servers[] blocks name this host; not saved as an AOL
+      artifact and not counted toward AOL's well-known surface.

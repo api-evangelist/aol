@@ -1,0 +1,64 @@
+overlay: 1.0.0
+info:
+  title: AOL OpenID Connect API — API Evangelist enhancements
+  version: 1.0.0
+extends: openapi/aol-openid-connect-api-openapi.yml
+x-generated: '2026-09-02'
+x-method: probed
+x-source: https://api.login.aol.com/.well-known/openid-configuration
+x-note: >-
+  Adds the AOL-owned identity host and the claims AOL advertises in
+  claims_supported that the base specification's UserInfo schema omits. Read from
+  AOL's own discovery document and a live 200 on the JWKS endpoint, 2026-09-02.
+actions:
+- target: $
+  description: Add the AOL-owned identity host as the primary server.
+  update:
+    servers:
+    - url: https://api.login.aol.com
+      description: >-
+        AOL identity / OpenID Connect server. Issuer per
+        https://api.login.aol.com/.well-known/openid-configuration.
+    - url: https://api.login.yahoo.com
+      description: >-
+        Yahoo Inc. deployment of the same identity platform. Retained from the
+        base specification.
+- target: $.info
+  update:
+    x-openid-configuration: https://api.login.aol.com/.well-known/openid-configuration
+    x-issuer: https://api.login.aol.com
+- target: $.components.schemas.UserInfo.properties
+  description: >-
+    Add the two standard claims present in AOL's claims_supported but missing
+    from the base schema.
+  update:
+    birthdate:
+      type: string
+      description: End-user birthday, advertised in claims_supported.
+    auth_time:
+      type: integer
+      description: >-
+        Time of the end-user authentication event, advertised in
+        claims_supported. Use with acr to enforce a freshness requirement.
+- target: $.paths['/openid/v1/certs'].get
+  description: Record the observed live key shape and the signing algorithms in use.
+  update:
+    x-probed:
+      url: https://api.login.aol.com/openid/v1/certs
+      status: 200
+      fetched: '2026-09-02'
+    x-key-fields:
+    - kty
+    - alg
+    - use
+    - kid
+    - n
+    - e
+    x-id-token-signing-algs:
+    - ES256
+    - RS256
+- target: $.paths['/openid/v1/userinfo'].get
+  description: Record the scope that gates this operation.
+  update:
+    x-required-scope: openid
+    x-error-envelope: 'RFC 6749 {"error","error_description"}'

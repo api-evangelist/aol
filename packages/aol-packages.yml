@@ -1,0 +1,47 @@
+generated: '2026-09-02'
+method: searched
+source: >-
+  npm registry search, plus the AOL GitHub organization
+  (https://github.com/aol) and this repo's apis.yml SDK/SourceCode links
+note: >-
+  AOL publishes no first-party client library for its identity API on any public
+  registry. The npm registry search for "aol" returns only third-party and
+  unrelated packages (passport-aol, passport-aol-oauth — both community
+  Passport.js strategies last published in 2012/2013; @browser-logos/aol-explorer
+  — an icon asset; aol-logger — an unrelated Art of Living package). No PyPI,
+  Maven Central, NuGet, pkg.go.dev, RubyGems, Packagist or crates.io first-party
+  package was found either. The AOL GitHub organization exists and is live but
+  its published repositories are the Oath-era infrastructure projects
+  (moloch, cyclops), not API client libraries.
+package_count: 0
+official_package_count: 0
+packages: []
+third_party_observed:
+- name: passport-aol
+  registry: npm
+  official: false
+  version: 0.0.1
+  published: '2013-02-11'
+  repository: https://github.com/jaredhanson/passport-aol.git
+  note: >-
+    Community Passport.js strategy. Last published 2013 — thirteen years before
+    the current AOL OpenID Connect provider this repo profiles, and it predates
+    OIDC on this stack entirely. Recorded as a decay signal, not as an SDK.
+- name: passport-aol-oauth
+  registry: npm
+  official: false
+  version: null
+  published: '2012-02-29'
+  repository: https://github.com/jrodenburg/passport-aol-oauth.git
+  note: >-
+    Community OAuth strategy, last published 2012. version not read — the
+    registry search index did not carry it and it is not first-party, so no
+    metadata fetch was made.
+evidence:
+- url: https://registry.npmjs.org/-/v1/search?text=aol&size=10
+  status: 200
+  fetched: '2026-09-02'
+- url: https://api.github.com/orgs/aol
+  status: 200
+  fetched: '2026-09-02'
+  note: Organization exists (id 855409, name "AOL"); no client-library repos.

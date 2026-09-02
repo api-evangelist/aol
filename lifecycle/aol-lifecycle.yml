@@ -1,0 +1,63 @@
+generated: '2026-09-02'
+method: searched
+source: https://status.aol.com/
+note: >-
+  AOL runs a first-party service status page for its consumer products. It
+  publishes no API versioning policy, no deprecation policy, no Sunset/Deprecation
+  header commitment (RFC 8594) and no SLA for the identity surface — recorded as
+  honest absences below, each with the probe that established it.
+status_page:
+  url: https://status.aol.com/
+  status: 200
+  first_party: true
+  scope: AOL consumer services (Mail, Desktop, Sign-in, Search)
+  machine_readable: false
+  note: >-
+    Server-rendered shell that loads service state client-side ("Loading status…").
+    Footer reads "© 2026 AOL Media LLC". No public JSON/RSS status feed was found
+    at the usual paths, so an agent cannot read incident state without executing
+    the page.
+  incidents_feed: null
+versioning:
+  scheme: path-segment
+  detail: >-
+    The identity surface versions in the path (/openid/v1/userinfo,
+    /openid/v1/certs). The OAuth 2.0 endpoints (/oauth2/request_auth,
+    /oauth2/get_token, /oauth2/revoke, /oauth2/introspect) are unversioned.
+  current_version: v1
+  published_policy: false
+  source: https://api.login.aol.com/.well-known/openid-configuration
+deprecation:
+  policy_published: false
+  sunset_header: unknown
+  deprecation_header: unknown
+  detail: >-
+    No deprecation or sunset policy is published for the AOL identity endpoints.
+    The discovery document does advertise a legacy compatibility scope, `openid2`,
+    which is the only migration signal AOL publishes — and it carries no stated
+    end date.
+  deprecated_operations: []
+sla:
+  published: false
+  detail: No published SLA or uptime commitment for the identity endpoints.
+support:
+  url: https://help.aol.com/
+  status: 200
+  type: consumer help center
+  detail: >-
+    AOL's support surface is a consumer help center, not a developer support
+    channel. Developer questions for this identity stack are handled on the
+    legacy Yahoo developer forum (https://developer.yahoo.com/forum/, 200).
+evidence:
+- url: https://status.aol.com/
+  status: 200
+  fetched: '2026-09-02'
+- url: https://help.aol.com/
+  status: 200
+  fetched: '2026-09-02'
+- url: https://api.login.aol.com/.well-known/openid-configuration
+  status: 200
+  fetched: '2026-09-02'
+- url: https://www.aol.com/plans
+  status: 404
+  fetched: '2026-09-02'

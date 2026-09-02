@@ -1,0 +1,109 @@
+generated: '2026-09-02'
+method: derived
+source: openapi/aol-oauth2-api-openapi.yml, openapi/aol-openid-connect-api-openapi.yml
+note: >-
+  Entity graph derived from the schemas declared in this repo's OpenAPI, enriched
+  with the claim set AOL advertises in its own discovery document. The identity
+  surface is intentionally shallow: three response schemas and no persistent
+  resources a client can address by id.
+entities:
+- name: TokenResponse
+  source: openapi/aol-oauth2-api-openapi.yml#/components/schemas/TokenResponse
+  description: The OAuth 2.0 token endpoint response.
+  fields:
+  - name: access_token
+    type: string
+  - name: token_type
+    type: string
+    example: bearer
+  - name: expires_in
+    type: integer
+  - name: refresh_token
+    type: string
+  - name: id_token
+    type: string
+    note: Signed JWT; present only when the `openid` scope was requested.
+  - name: xoauth_yahoo_guid
+    type: string
+    note: >-
+      Vendor-specific stable user identifier carried over from the Oath-era
+      identity platform. It is the closest thing to a primary key this surface
+      exposes and it is NOT an OIDC standard claim.
+    id_field: true
+- name: UserInfo
+  source: openapi/aol-openid-connect-api-openapi.yml#/components/schemas/UserInfo
+  description: OpenID Connect standard claims for the authenticated end user.
+  fields:
+  - name: sub
+    type: string
+    id_field: true
+    note: Subject identifier; subject_types_supported = public.
+  - name: name
+    type: string
+  - name: given_name
+    type: string
+  - name: family_name
+    type: string
+  - name: email
+    type: string
+    format: email
+  - name: email_verified
+    type: boolean
+  - name: locale
+    type: string
+  - name: profile_images
+    type: object
+  - name: birthdate
+    type: string
+    source: https://api.login.aol.com/.well-known/openid-configuration
+    note: In claims_supported per the discovery document; absent from this repo's spec.
+  - name: auth_time
+    type: integer
+    source: https://api.login.aol.com/.well-known/openid-configuration
+    note: In claims_supported per the discovery document; absent from this repo's spec.
+- name: JWKS
+  source: openapi/aol-openid-connect-api-openapi.yml
+  description: JSON Web Key Set used to verify AOL-issued ID tokens.
+  fields:
+  - name: keys
+    type: array
+  probed_shape:
+    url: https://api.login.aol.com/openid/v1/certs
+    status: 200
+    keys_carry: [kty, alg, use, kid, n, e]
+- name: Error
+  source: openapi/aol-oauth2-api-openapi.yml#/components/schemas/Error
+  description: RFC 6749 OAuth error envelope.
+  fields:
+  - name: error
+    type: string
+  - name: error_description
+    type: string
+relationships:
+- from: TokenResponse
+  to: UserInfo
+  type: has_one
+  via: id_token.sub -> UserInfo.sub
+  confidence: high
+  note: >-
+    The `sub` claim inside the signed id_token is the same subject identifier the
+    userinfo endpoint returns.
+- from: TokenResponse
+  to: JWKS
+  type: belongs_to
+  via: id_token header `kid` -> JWKS.keys[].kid
+  confidence: high
+  note: >-
+    The only cross-entity join on this surface an agent must actually perform:
+    select the JWKS key whose kid matches the ID token header to verify the
+    signature.
+- from: UserInfo
+  to: TokenResponse
+  type: belongs_to
+  via: requires an access_token issued with the `openid` scope
+  confidence: high
+coverage:
+  entities: 4
+  relationships: 3
+  id_fields: 2
+  render: null

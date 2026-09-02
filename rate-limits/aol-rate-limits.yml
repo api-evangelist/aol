@@ -3,91 +3,51 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: AOL
 providerId: aol
+generated: '2026-09-02'
+method: searched
+source: >-
+  https://api.login.aol.com/.well-known/openid-configuration and live anonymous
+  responses from https://api.login.aol.com
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
+modified: '2026-09-02'
+description: >-
+  AOL publishes no rate limits for its identity API. This file replaces a
+  2026-05-04 bulk-sweep scaffold that asserted invented free/professional/
+  enterprise tiers with invented per-minute and per-month numbers for a provider
+  that has published none. Those numbers were never AOL's. An honest zero is the
+  correct measurement here.
+limit_count: 0
+limits: []
+headers: {}
+headers_observed: []
+responseCodes: {}
+note: >-
+  Searched AOL's OpenID Connect discovery document, its security.txt, its help
+  centre and its status page for any published quota, throttle or fair-use
+  statement covering api.login.aol.com — none exists. No RateLimit-*,
+  X-RateLimit-* or Retry-After header was returned on any anonymous response
+  observed from the identity host, including the 200 on /openid/v1/certs and the
+  404 on /.well-known/api-catalog. AOL runs no developer portal where such a
+  policy would normally live, so an integrator has no published runtime signal
+  and no documented ceiling to design against.
+evidence:
+- url: https://api.login.aol.com/openid/v1/certs
+  status: 200
+  fetched: '2026-09-02'
+  note: 200 response carried no rate-limit headers.
+- url: https://api.login.aol.com/.well-known/openid-configuration
+  status: 200
+  fetched: '2026-09-02'
+  note: Discovery document declares no rate-limit or quota metadata.
+- url: https://www.aol.com/.well-known/api-catalog
+  status: 404
+  fetched: '2026-09-02'
 tags:
-  - Advertising
-  - Digital Media
-  - Entertainment
-  - News
-  - Rate Limiting
-  - Quotas
-  - Throttling
-description: Machine-readable rate limit definitions for the AOL API surface. Captures per-tier quotas,
-  burst behavior, response signaling, and recovery semantics. Defaults are scaffold values to be replaced
-  with published provider limits.
-headers:
-  limit: X-RateLimit-Limit
-  remaining: X-RateLimit-Remaining
-  reset: X-RateLimit-Reset
-  retryAfter: Retry-After
-  policy: RateLimit-Policy
-responseCodes:
-  throttled: 429
-  quotaExceeded: 429
-  serviceUnavailable: 503
-limits:
-  - tier: free
-    name: Free Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 10
-    burst: 20
-    timeFrame: minute
-    applies:
-      - Yahoo Developer Network (formerly AOL Developer)
-  - tier: free
-    name: Free Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 1000
-    timeFrame: month
-    applies:
-      - Yahoo Developer Network (formerly AOL Developer)
-  - tier: professional
-    name: Professional Tier Default
-    scope: api-key
-    metric: requests_per_minute
-    limit: 100
-    burst: 200
-    timeFrame: minute
-    applies:
-      - Yahoo Developer Network (formerly AOL Developer)
-  - tier: professional
-    name: Professional Tier Monthly Quota
-    scope: api-key
-    metric: requests_per_month
-    limit: 100000
-    timeFrame: month
-    applies:
-      - Yahoo Developer Network (formerly AOL Developer)
-  - tier: enterprise
-    name: Enterprise Negotiated Limit
-    scope: contract
-    metric: requests_per_minute
-    limit: 1000
-    burst: 5000
-    timeFrame: minute
-    applies:
-      - Yahoo Developer Network (formerly AOL Developer)
-policies:
-  - name: Backoff Strategy
-    description: Clients should implement exponential backoff with jitter, honoring the Retry-After header
-      when present.
-  - name: Burst Handling
-    description: Short bursts above the steady-state limit are tolerated up to the documented burst ceiling
-      before throttling engages.
-  - name: Quota Reset
-    description: Monthly quotas reset at the start of each calendar month in UTC. Per-minute and per-second
-      windows reset on a sliding-window basis.
-  - name: Fair Use
-    description: Even on uncapped enterprise tiers, sustained usage that materially impacts shared infrastructure
-      may be subject to fair-use throttling.
+- Identity
+- OpenID Connect
+- Rate Limiting
 maintainers:
-  - FN: Kin Lane
-    email: info@apievangelist.com
-    X: apievangelist
-    url: https://apievangelist.com
+- FN: Kin Lane
+  email: info@apievangelist.com
+  X: apievangelist
+  url: https://apievangelist.com

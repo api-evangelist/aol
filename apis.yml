@@ -1,10 +1,16 @@
 name: AOL
 description: >-
-  AOL (America Online) is a digital media company and a division of Verizon
-  Media (now Yahoo). AOL operates news and entertainment properties including
-  AOL.com, Engadget, and TechCrunch. Historically, AOL provided developer APIs
-  for advertising, content, and identity services that have since been
-  consolidated into the Yahoo/Verizon Media API ecosystem.
+  AOL is a consumer internet media and communications brand — AOL.com news, AOL
+  Mail, AOL Search and AOL Desktop — operated by AOL Media LLC. Founded as
+  America Online, it was acquired by Verizon in 2015, folded into Oath and then
+  Yahoo, and sold on to the Italian software company Bending Spoons in 2026; the
+  security.txt AOL serves today points its PGP key at bendingspoons.com. AOL runs
+  no developer program and publishes no product API. Its one publicly callable,
+  machine-readable contract is the OpenID Connect provider at api.login.aol.com,
+  which serves a full discovery document under its own issuer and lets a
+  third-party application sign a user in with their AOL account. The legacy
+  developer documentation for that identity stack is hosted by Yahoo Inc., which
+  runs a sibling deployment of the same Oath-era OAuth 2.0 / OIDC platform.
 deliveryModel:
   model: saas
   open_source: false
@@ -18,73 +24,97 @@ deliveryModel:
   generated: '2026-08-28'
   method: derived
 accessModel:
-  pricing: freemium
+  pricing: free
   onboarding: self-serve
   trial: false
   try_now: true
-  public: false
-  label: Freemium · Self-serve signup
+  public: true
+  label: Free · App registration required
   confidence: high
   source:
   - plans
   - authentication
-  generated: '2026-07-22'
+  generated: '2026-09-02'
   method: derived
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/aol.png
 url: https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml
 created: "2026-03-23"
-modified: "2026-04-19"
+modified: "2026-09-02"
 specificationVersion: '0.23'
 tags:
-  - Advertising
   - Digital Media
-  - Entertainment
   - News
+  - Entertainment
+  - Advertising
+  - Identity
+  - OpenID Connect
+  - Authentication
+  - Email
+  - Consumer Internet
   - Fortune 1000
 apis:
-- name: Yahoo Developer Network (formerly AOL Developer)
+- name: Yahoo Developer Network (legacy documentation for the AOL identity stack)
   description: >-
-    Following AOL's acquisition by Verizon and subsequent merger with Yahoo, AOL developer APIs have been
-    consolidated into the Yahoo Developer Network. Yahoo/AOL APIs provide access to advertising services,
-    weather, finance, search, and identity services for developers building on the Oath/Verizon Media
-    platform.
+    AOL runs no developer portal of its own. App registration and the human
+    documentation for the OAuth 2.0 / OpenID Connect endpoints AOL serves at
+    api.login.aol.com live on the Yahoo Developer Network, because Yahoo Inc.
+    built and still operates a sibling deployment of the same Oath-era identity
+    platform at api.login.yahoo.com. This entry records that documentation
+    surface; the callable AOL contract is the two API entries below.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.yahoo.com
-  baseURL: https://api.yahoo.com
+  baseURL: https://api.login.yahoo.com
   tags:
-  - Advertising
-  - Digital Media
+  - Documentation
+  - Identity
   - Yahoo
   properties:
   - type: Documentation
     url: https://developer.yahoo.com/
   - type: GettingStarted
     url: https://developer.yahoo.com/oauth2/guide/openid_connect/
+  - type: APIReference
+    url: https://developer.yahoo.com/oauth2/guide/
   contact:
   - FN: Yahoo Developer Support
     url: https://developer.yahoo.com/forum/
 - aid: aol:aol-oauth2-api
   name: AOL OAuth2 API
-  description: OAuth 2.0 Authorization Code grant endpoints
-  humanURL: https://developer.yahoo.com
-  baseURL: https://api.yahoo.com
+  description: >-
+    OAuth 2.0 Authorization Code grant endpoints served by AOL at
+    api.login.aol.com. Authorization, token exchange and refresh, plus the
+    revocation and introspection endpoints AOL declares in its own OpenID Connect
+    discovery document. Client authentication is client_secret_basic or
+    client_secret_post; there is no client-credentials or device flow.
+  humanURL: https://developer.yahoo.com/oauth2/guide/
+  baseURL: https://api.login.aol.com
   tags:
   - Authentication
+  - OAuth2
   tags_raw:
   - OAuth2
   properties:
   - type: OpenAPI
     url: openapi/aol-oauth2-api-openapi.yml
+  - type: Overlay
+    url: overlays/aol-oauth2-api-overlay.yaml
 - aid: aol:aol-openid-connect-api
   name: AOL OpenID Connect API
-  description: OpenID Connect userinfo and JWKS endpoints
-  humanURL: https://developer.yahoo.com
-  baseURL: https://api.yahoo.com
+  description: >-
+    OpenID Connect userinfo and JWKS endpoints served by AOL at
+    api.login.aol.com under issuer https://api.login.aol.com. Standard claims
+    including sub, name, email, email_verified, locale, birthdate and auth_time;
+    ID tokens signed ES256 or RS256; AAL1/AAL2 assurance levels advertised.
+  humanURL: https://developer.yahoo.com/oauth2/guide/openid_connect/
+  baseURL: https://api.login.aol.com
   tags:
   - OpenID Connect
+  - Authentication
   properties:
   - type: OpenAPI
     url: openapi/aol-openid-connect-api-openapi.yml
+  - type: Overlay
+    url: overlays/aol-openid-connect-api-overlay.yaml
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
@@ -93,21 +123,58 @@ maintainers:
 common:
   - type: AgenticAccess
     url: agentic-access/aol-agentic-access.yml
-  - type: VulnerabilityDisclosure
-    url: security/aol-vulnerability-disclosure.yml
-  - type: DomainSecurity
-    url: security/aol-domain-security.yml
   - type: Authentication
     url: authentication/aol-authentication.yml
   - type: OAuthScopes
     url: scopes/aol-scopes.yml
+  - type: Conventions
+    url: conventions/aol-conventions.yml
+  - type: ErrorCatalog
+    url: errors/aol-problem-types.yml
+  - type: DataModel
+    url: data-model/aol-data-model.yml
+  - type: Conformance
+    url: conformance/aol-conformance.yml
+  - type: Lifecycle
+    url: lifecycle/aol-lifecycle.yml
+  - type: StatusPage
+    url: https://status.aol.com/
+  - type: WellKnown
+    url: well-known/aol-well-known.yml
+  - type: SecurityTxt
+    url: well-known/aol-security.txt
+  - type: Security
+    url: security/aol-vulnerability-disclosure.yml
+  - type: VulnerabilityDisclosure
+    url: security/aol-vulnerability-disclosure.yml
+  - type: DomainSecurity
+    url: security/aol-domain-security.yml
+  - type: AgentSkill
+    url: skills/_index.yml
+  - type: LLMsTxt
+    url: llms/aol-llms.txt
+  - type: Packages
+    url: packages/aol-packages.yml
+  - type: RateLimits
+    url: rate-limits/aol-rate-limits.yml
+  - type: Plans
+    url: plans/aol-plans-pricing.yml
   - type: GitHubOrganization
     url: https://github.com/aol
   - type: LinkedIn
     url: https://www.linkedin.com/company/aol
-  - type: Portal
+  - type: Website
     url: https://www.aol.com
+  - type: Support
+    url: https://help.aol.com/
+  - type: SignUp
+    url: https://login.aol.com/
   - type: TermsOfService
-    url: https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html
+    url: https://legal.aol.com/terms/index.html
   - type: PrivacyPolicy
-    url: https://legal.yahoo.com/us/en/yahoo/privacy/index.html
+    url: https://legal.aol.com/privacy/index.html
+x-enrichment:
+  date: '2026-09-02'
+  status: enriched
+  artifacts_added: 16
+  pass: local-v1

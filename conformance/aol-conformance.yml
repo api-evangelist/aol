@@ -1,0 +1,119 @@
+generated: '2026-09-02'
+method: probed
+source: https://api.login.aol.com/.well-known/openid-configuration
+note: >-
+  Every entry below is asserted against a document AOL actually serves, not
+  against a marketing claim. The identity surface is the only machine-readable
+  contract AOL publishes, so the conformance surface is an identity-standards
+  surface.
+standards:
+- id: openid-connect-discovery
+  name: OpenID Connect Discovery 1.0
+  conforms: true
+  evidence:
+    url: https://api.login.aol.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      Full discovery document served at the RFC-mandated path with issuer,
+      authorization_endpoint, token_endpoint, userinfo_endpoint, jwks_uri,
+      response_types_supported, subject_types_supported and
+      id_token_signing_alg_values_supported all present.
+- id: openid-connect-core
+  name: OpenID Connect Core 1.0
+  conforms: true
+  evidence:
+    url: https://api.login.aol.com/openid/v1/userinfo
+    status: declared
+    detail: >-
+      userinfo_endpoint declared in discovery; standard claims set (sub, name,
+      given_name, family_name, email, email_verified, locale, birthdate,
+      auth_time, iss, aud, iat, exp) advertised in claims_supported. Authorization
+      Code flow with `openid` scope is the documented flow.
+- id: oauth2
+  name: OAuth 2.0 Authorization Framework (RFC 6749)
+  conforms: true
+  evidence:
+    url: https://api.login.aol.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      grant_types_supported = [authorization_code, refresh_token];
+      token_endpoint_auth_methods_supported = [client_secret_basic,
+      client_secret_post].
+- id: rfc7662-token-introspection
+  name: OAuth 2.0 Token Introspection (RFC 7662)
+  conforms: partial
+  evidence:
+    url: https://api.login.aol.com/oauth2/introspect
+    status: 403
+    detail: >-
+      introspection_endpoint is declared in the discovery document and the host
+      answers on it, but anonymous requests are refused (403) so the response
+      shape could not be verified. Declared, not verified.
+- id: rfc7009-token-revocation
+  name: OAuth 2.0 Token Revocation (RFC 7009)
+  conforms: true
+  evidence:
+    url: https://api.login.aol.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      token_revocation_endpoint = https://api.login.aol.com/oauth2/revoke.
+- id: rfc7517-jwks
+  name: JSON Web Key Set (RFC 7517)
+  conforms: true
+  evidence:
+    url: https://api.login.aol.com/openid/v1/certs
+    status: 200
+    detail: >-
+      Live JWKS served anonymously with RSA keys carrying kty/alg/use/kid, usable
+      to verify AOL-issued ID tokens. Signing algorithms advertised: ES256, RS256.
+- id: rfc9116-security-txt
+  name: A File Format to Aid in Security Vulnerability Disclosure (RFC 9116)
+  conforms: true
+  evidence:
+    url: https://www.aol.com/.well-known/security.txt
+    status: 200
+    detail: >-
+      Contact, Policy, Encryption, Expires and Preferred-Languages fields all
+      present; Expires 2028-01-02, so the file is unexpired.
+- id: nist-800-63-aal
+  name: NIST SP 800-63B Authenticator Assurance Levels
+  conforms: true
+  evidence:
+    url: https://api.login.aol.com/.well-known/openid-configuration
+    status: 200
+    detail: >-
+      acr_values_supported = [AAL1, AAL2]. Relying parties can request and verify
+      a multi-factor authentication event by ACR rather than by vendor-specific
+      flag. This is the domain-standard signature for the consumer-identity
+      market: an RP that already speaks AAL integrates with no bespoke connector.
+- id: rfc9457-problem-details
+  name: Problem Details for HTTP APIs (RFC 9457)
+  conforms: false
+  evidence:
+    url: https://api.login.aol.com/.well-known/api-catalog
+    status: 404
+    detail: >-
+      The identity host returns a proprietary JSON envelope
+      {"error":{"localizedMessage","errorId","message"}} with content-type
+      application/json, not application/problem+json. See
+      errors/aol-problem-types.yml.
+- id: rfc8615-well-known-api-catalog
+  name: RFC 9727 api-catalog well-known URI
+  conforms: false
+  evidence:
+    url: https://www.aol.com/.well-known/api-catalog
+    status: 404
+    detail: No api-catalog document on any AOL host probed.
+not_applicable:
+- id: fhir
+  reason: Not a healthcare provider.
+- id: psd2
+  reason: Not a payment services provider.
+- id: fapi
+  reason: >-
+    FAPI profiles the same OIDC stack but targets financial-grade APIs; AOL's
+    identity provider is a consumer login, and no FAPI conformance is claimed.
+- id: scim
+  reason: No published user-provisioning surface.
+- id: odata
+  reason: No OData surface.

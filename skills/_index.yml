@@ -1,0 +1,34 @@
+generated: '2026-09-02'
+method: generated
+source: >-
+  openapi/aol-oauth2-api-openapi.yml, openapi/aol-openid-connect-api-openapi.yml,
+  https://api.login.aol.com/.well-known/openid-configuration
+note: >-
+  Two skills covering the whole of AOL's callable surface: the sign-in flow and
+  its reversal. Every operationId referenced below exists in this repo's OpenAPI;
+  the revoke/introspect endpoints referenced in the second skill come from AOL's
+  own discovery document and are flagged there as absent from the spec.
+skills:
+- name: sign-in-with-aol
+  file: skills/aol-sign-in-with-aol.md
+  description: >-
+    OAuth 2.0 Authorization Code sign-in against AOL's OpenID Connect provider,
+    ID token verification against the live JWKS, and reading profile claims.
+  api: AOL OAuth2 API + AOL OpenID Connect API
+  operations:
+  - requestAuth
+  - getToken
+  - getUserInfo
+  - getJwks
+- name: revoke-aol-access
+  file: skills/aol-revoke-aol-access.md
+  description: >-
+    Reverse a token grant via AOL's RFC 7009 revocation endpoint; what revocation
+    undoes, what it does not, and why no window is asserted.
+  api: AOL OAuth2 API
+  operations:
+  - getToken
+coverage:
+  skills: 2
+  operations_covered: 4
+  operations_total: 4

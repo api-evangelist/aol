@@ -11,6 +11,10 @@
   "archived": [],
   "errors": [],
   "warnings": [],
-  "notes": [],
+  "notes": [
+    "aol-oauth2-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "aol-openid-connect-api-openapi.yml: upgraded openapi 3.1.0 -> OpenAPI 3.2.0",
+    "apis.yml register: already-registered"
+  ],
   "skipped": []
 }

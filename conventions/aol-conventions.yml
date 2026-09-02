@@ -1,0 +1,155 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  https://api.login.aol.com/.well-known/openid-configuration,
+  https://www.aol.com/robots.txt, and this repo's openapi/ files
+note: >-
+  Cross-cutting runtime semantics for the only machine-readable API surface AOL
+  publishes — its OpenID Connect provider at api.login.aol.com. Everything below
+  is read from a document AOL serves or from a spec in this repo; absences are
+  recorded as absences.
+auth:
+  style: oauth2-authorization-code
+  detail: >-
+    Authorization Code grant only. Client authentication at the token endpoint is
+    client_secret_basic or client_secret_post. Access tokens are bearer tokens;
+    ID tokens are JWTs signed ES256 or RS256 and verifiable against the live JWKS.
+  header: 'Authorization: Bearer <access_token>'
+  refresh: grant_type=refresh_token at https://api.login.aol.com/oauth2/get_token
+  mfa_signal: acr_values AAL1 / AAL2 (NIST SP 800-63B)
+  see_also: authentication/aol-authentication.yml
+idempotency:
+  supported: false
+  state: na
+  detail: >-
+    No idempotency key header is documented and none is advertised in the
+    discovery document. The write surface is limited to token issuance and token
+    revocation, both of which are naturally single-shot: an authorization code is
+    one-time-use by RFC 6749, and revoking an already-revoked token is a no-op by
+    RFC 7009. There is no resource-creation endpoint for an idempotency key to
+    protect.
+  key_header: null
+pagination:
+  supported: false
+  state: na
+  detail: >-
+    Every endpoint returns a single document (token response, userinfo claims,
+    JWKS). No collection endpoint exists, so there is no pagination surface.
+field_expansion:
+  supported: false
+  detail: >-
+    Response shape is selected by OAuth scope rather than by a sparse-fieldset
+    parameter — `profile` and `email` widen the userinfo claim set. The OIDC
+    `claims` request parameter, which would be the standard per-claim selector,
+    is explicitly unsupported (claims_parameter_supported = false).
+metadata:
+  supported: false
+  detail: >-
+    No customer-defined metadata surface. The `state` query parameter on the
+    authorization request is the only round-tripped opaque client value, and it
+    is a CSRF control, not a metadata store.
+request_tracing:
+  request_id_header: null
+  detail: >-
+    No request-id or correlation header is documented, and the observed error
+    envelope carries no trace identifier — only errorId, message and
+    localizedMessage. An agent cannot cite a request id when reporting a failure.
+versioning:
+  style: path-segment on the OIDC endpoints, unversioned on the OAuth endpoints
+  current: v1
+  detail: /openid/v1/userinfo and /openid/v1/certs; /oauth2/* carry no version segment.
+  see_also: lifecycle/aol-lifecycle.yml
+errors:
+  envelope: 'proprietary: {"error":{"errorId","message","localizedMessage"}}'
+  oauth_envelope: 'RFC 6749: {"error","error_description"}'
+  rfc9457: false
+  detail: >-
+    Two different envelopes on one host, and a third shape (bare HTML) on 403.
+    See errors/aol-problem-types.yml.
+  see_also: errors/aol-problem-types.yml
+rate_limits:
+  published: false
+  headers_observed: []
+  detail: >-
+    No rate-limit documentation and no RateLimit-*/X-RateLimit-* headers observed
+    on anonymous responses from api.login.aol.com.
+  see_also: rate-limits/aol-rate-limits.yml
+dry_run_mode:
+  supported: false
+  state: na
+  detail: >-
+    No sandbox, test mode, or dry-run parameter is published. There is no
+    non-production issuer, so an agent cannot rehearse a token exchange.
+reversibility:
+  grade: documented
+  state: partial
+  detail: >-
+    The identity surface has exactly one consequential write — issuing an access
+    or refresh token — and AOL publishes a first-class reversal for it. The
+    reversal path is machine-discoverable from the provider's own discovery
+    document; the WINDOW is not stated anywhere AOL publishes, so this grades
+    `documented` (reversal path present) rather than `verified` (path + stated
+    window).
+  surfaces:
+  - write: Token issuance (access token + refresh token)
+    operation: getToken
+    operation_path: POST /oauth2/get_token
+    reversal: Token revocation
+    reversal_endpoint: https://api.login.aol.com/oauth2/revoke
+    reversal_operation_id: null
+    reversal_in_spec: false
+    window: not-stated
+    window_source: null
+    source: https://api.login.aol.com/.well-known/openid-configuration
+    note: >-
+      token_revocation_endpoint is declared in the discovery document. It is NOT
+      present in this repo's OpenAPI, which is a gap in our spec rather than in
+      AOL's surface. No published statement of how long a revocation takes to
+      propagate, nor of any grace period, so no window is asserted here.
+  - write: User consent grant (authorization)
+    operation: requestAuth
+    operation_path: GET /oauth2/request_auth
+    reversal: >-
+      End-user revocation of the application's access from the AOL account
+      settings surface.
+    reversal_endpoint: https://myaccount.aol.com/
+    window: not-stated
+    window_source: null
+    note: >-
+      Reversal is human-driven through the account UI, not an API operation. An
+      agent cannot un-grant consent programmatically.
+  - write: Token revocation
+    operation: null
+    reversal: none
+    window: not-applicable
+    note: >-
+      Revocation is terminal and not itself reversible — a new Authorization Code
+      flow is required to regain access.
+  read_only: false
+agent_posture:
+  ai_crawlers_disallowed: true
+  detail: >-
+    A material finding for any agent integrating with AOL: www.aol.com/robots.txt
+    carries a blanket `Disallow: /` for 40+ named AI agents and crawlers,
+    including anthropic-ai, ClaudeBot, Claude-Web, GPTBot, ChatGPT-User, CCBot,
+    Google-Extended, PerplexityBot, Perplexity-ai, cohere-ai, Bytespider,
+    Diffbot, FacebookBot, huggingface, img2dataset and YouBot. `/api/` is also
+    disallowed for all user-agents. The identity host api.login.aol.com is a
+    separate origin and is not covered by that file.
+  evidence:
+    url: https://www.aol.com/robots.txt
+    status: 200
+    fetched: '2026-09-02'
+  llms_txt_served: false
+  mcp_server: false
+  agent_card: false
+evidence:
+- url: https://api.login.aol.com/.well-known/openid-configuration
+  status: 200
+  fetched: '2026-09-02'
+- url: https://www.aol.com/robots.txt
+  status: 200
+  fetched: '2026-09-02'
+- url: https://api.login.aol.com/openid/v1/certs
+  status: 200
+  fetched: '2026-09-02'

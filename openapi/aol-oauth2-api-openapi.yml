@@ -1,6 +1,6 @@
-openapi: 3.1.0
+openapi: 3.2.0
 info:
-  title: Yahoo (formerly AOL) OAuth 2.0 and OpenID Connect OAuth2 API
+  title: Yahoo (formerly AOL) OAuth 2.0 and OpenID Connect O Auth2 API
   description: 'Yahoo OAuth 2.0 and OpenID Connect endpoints used by developers building on
 
     the Yahoo / former AOL identity platform. Following AOL''s acquisition by
@@ -168,13 +168,6 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
     TokenResponse:
       type: object
       properties:
@@ -194,6 +187,13 @@ components:
         xoauth_yahoo_guid:
           type: string
           description: Yahoo GUID of the authenticated user
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
   securitySchemes:
     basicAuth:
       type: http

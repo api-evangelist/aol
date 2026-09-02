@@ -1,0 +1,98 @@
+generated: '2026-09-02'
+method: probed
+source: >-
+  live 404 responses from https://api.login.aol.com plus 4xx responses declared in
+  openapi/aol-oauth2-api-openapi.yml and openapi/aol-openid-connect-api-openapi.yml
+format: proprietary-json
+note: >-
+  AOL's identity host does NOT emit RFC 9457 problem+json. It returns a
+  proprietary envelope with content-type application/json, observed live on an
+  unauthenticated 404. The OAuth endpoints separately return the RFC 6749 error
+  envelope. Both are recorded because a client hitting this API will meet both.
+envelopes:
+- id: platform-error
+  media_type: application/json
+  shape:
+    error:
+      errorId: string — machine-readable error identifier, SCREAMING_SNAKE_CASE
+      message: string — developer-facing message
+      localizedMessage: string — end-user-facing, locale-resolved message
+  example_observed: '{"error":{"localizedMessage":"not found","errorId":"NOT_FOUND","message":"not found"}}'
+  observed_at: https://api.login.aol.com/.well-known/api-catalog
+  observed_status: 404
+  applies_to: All non-OAuth paths on api.login.aol.com
+- id: oauth2-error
+  media_type: application/json
+  shape:
+    error: string — RFC 6749 error code
+    error_description: string — human-readable description
+  applies_to: /oauth2/request_auth, /oauth2/get_token
+  source: openapi/aol-oauth2-api-openapi.yml (components.schemas.Error)
+problem_types:
+- id: NOT_FOUND
+  status: 404
+  title: Resource not found
+  envelope: platform-error
+  detail: >-
+    The requested path is not served by the identity host. Observed live; errorId
+    is literally "NOT_FOUND".
+  remediation: >-
+    Check the path against the discovery document at
+    /.well-known/openid-configuration rather than guessing endpoints.
+  method: probed
+  evidence:
+    url: https://api.login.aol.com/.well-known/api-catalog
+    status: 404
+- id: forbidden
+  status: 403
+  title: Forbidden
+  envelope: html
+  detail: >-
+    The introspection endpoint and login.aol.com return a minimal HTML 403 body,
+    not JSON, when an anonymous caller is refused. A client parsing for JSON will
+    fail on this response.
+  remediation: Authenticate with client credentials before calling /oauth2/introspect.
+  method: probed
+  evidence:
+    url: https://api.login.aol.com/oauth2/introspect
+    status: 403
+- id: invalid_request
+  status: 400
+  title: Invalid request
+  envelope: oauth2-error
+  detail: >-
+    Malformed or missing parameter on the token exchange (RFC 6749 §5.2).
+  remediation: >-
+    Verify client_id, client_secret, redirect_uri, grant_type and the
+    code/refresh_token pair required by the selected grant_type.
+  method: derived
+  source: openapi/aol-oauth2-api-openapi.yml
+- id: invalid_client
+  status: 401
+  title: Invalid client authentication
+  envelope: oauth2-error
+  detail: >-
+    Client authentication failed at the token endpoint. AOL accepts
+    client_secret_basic and client_secret_post only.
+  remediation: >-
+    Send credentials as HTTP Basic (base64 client_id:client_secret) or in the
+    form body; no other token_endpoint_auth_method is supported.
+  method: derived
+  source: >-
+    openapi/aol-oauth2-api-openapi.yml +
+    https://api.login.aol.com/.well-known/openid-configuration
+- id: unauthorized-userinfo
+  status: 401
+  title: Missing or invalid bearer token
+  envelope: oauth2-error
+  detail: Userinfo called without a valid access token issued with the `openid` scope.
+  remediation: >-
+    Re-run the Authorization Code flow requesting `openid`, or refresh the access
+    token at /oauth2/get_token with grant_type=refresh_token.
+  method: derived
+  source: openapi/aol-openid-connect-api-openapi.yml
+coverage:
+  problem_types: 5
+  probed: 2
+  derived: 3
+  rfc9457: false

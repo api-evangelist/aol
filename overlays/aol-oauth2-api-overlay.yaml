@@ -1,0 +1,68 @@
+overlay: 1.0.0
+info:
+  title: AOL OAuth 2.0 API — API Evangelist enhancements
+  version: 1.0.0
+extends: openapi/aol-oauth2-api-openapi.yml
+x-generated: '2026-09-02'
+x-method: probed
+x-source: https://api.login.aol.com/.well-known/openid-configuration
+x-note: >-
+  The base specification names api.login.yahoo.com, the sibling deployment Yahoo
+  Inc. runs. AOL serves its own OpenID Connect discovery document at
+  api.login.aol.com declaring issuer "https://api.login.aol.com" and the same
+  endpoint paths, so the AOL-owned host is added here as the primary server
+  rather than mutated into the base spec. Every value in this overlay was read
+  from that discovery document, probed 200 on 2026-09-02.
+actions:
+- target: $
+  description: Add the AOL-owned identity host as the primary server.
+  update:
+    servers:
+    - url: https://api.login.aol.com
+      description: >-
+        AOL identity / OAuth 2.0 / OpenID Connect server. Issuer per
+        https://api.login.aol.com/.well-known/openid-configuration.
+    - url: https://api.login.yahoo.com
+      description: >-
+        Yahoo Inc. deployment of the same Oath-era identity platform. Retained
+        from the base specification.
+- target: $.info
+  description: Record the discovery document as the contract of record.
+  update:
+    x-openid-configuration: https://api.login.aol.com/.well-known/openid-configuration
+    x-issuer: https://api.login.aol.com
+- target: $.components.securitySchemes.oauth2.flows.authorizationCode
+  description: >-
+    Add the `openid2` scope, which AOL advertises in scopes_supported but the
+    base specification omits, and point the flow at the AOL-owned host.
+  update:
+    authorizationUrl: https://api.login.aol.com/oauth2/request_auth
+    tokenUrl: https://api.login.aol.com/oauth2/get_token
+    refreshUrl: https://api.login.aol.com/oauth2/get_token
+    scopes:
+      openid2: Legacy OpenID 2.0 compatibility scope
+- target: $.components.securitySchemes
+  description: Add the openIdConnect scheme AOL's discovery document supports.
+  update:
+    openIdConnect:
+      type: openIdConnect
+      openIdConnectUrl: https://api.login.aol.com/.well-known/openid-configuration
+- target: $.paths['/oauth2/get_token'].post
+  description: >-
+    Record the reversal path for token issuance and the supported client
+    authentication methods.
+  update:
+    x-reversal:
+      endpoint: https://api.login.aol.com/oauth2/revoke
+      standard: RFC 7009
+      window: not-stated
+      grade: documented
+    x-token-endpoint-auth-methods:
+    - client_secret_basic
+    - client_secret_post
+- target: $.paths['/oauth2/request_auth'].get
+  description: Record the assurance levels a relying party may request.
+  update:
+    x-acr-values-supported:
+    - AAL1
+    - AAL2

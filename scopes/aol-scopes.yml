@@ -1,29 +1,55 @@
-generated: '2026-07-11'
-method: derived
-source: openapi/aol-openapi.yml
+generated: '2026-09-02'
+method: probed
+source: https://api.login.aol.com/.well-known/openid-configuration
+docs: https://developer.yahoo.com/oauth2/guide/openid_connect/
+note: >-
+  Upgraded from derived (three scopes read out of this repo's OpenAPI) to probed
+  against AOL's own OpenID Connect discovery document, which advertises a fourth
+  scope, `openid2`, that the spec omits. AOL publishes no separate scope /
+  permissions reference page; `scopes_supported` in the discovery document is the
+  authoritative published list.
 schemes:
 - name: oauth2
-  source: openapi/aol-openapi.yml
+  source: https://api.login.aol.com/.well-known/openid-configuration
   flows:
   - flow: authorizationCode
-    authorizationUrl: https://api.login.yahoo.com/oauth2/request_auth
-    tokenUrl: https://api.login.yahoo.com/oauth2/get_token
+    authorizationUrl: https://api.login.aol.com/oauth2/request_auth
+    tokenUrl: https://api.login.aol.com/oauth2/get_token
 scopes:
-- scope: email
-  description: Email address
-  flows:
-  - authorizationCode
-  sources:
-  - openapi/aol-openapi.yml
 - scope: openid
-  description: OpenID Connect authentication
+  description: >-
+    OpenID Connect authentication. Requesting it makes the token response carry a
+    signed `id_token` and enables the userinfo endpoint.
   flows:
   - authorizationCode
   sources:
-  - openapi/aol-openapi.yml
+  - https://api.login.aol.com/.well-known/openid-configuration
+  - openapi/aol-oauth2-api-openapi.yml
+- scope: openid2
+  description: >-
+    Legacy OpenID 2.0 compatibility scope advertised by the AOL discovery
+    document for applications migrated from the pre-OIDC AOL/Oath identity stack.
+    Not present in this repo's OpenAPI; discovered by probe.
+  flows:
+  - authorizationCode
+  sources:
+  - https://api.login.aol.com/.well-known/openid-configuration
 - scope: profile
-  description: Basic profile information
+  description: >-
+    Basic profile claims — name, given_name, family_name, locale, birthdate.
   flows:
   - authorizationCode
   sources:
-  - openapi/aol-openapi.yml
+  - https://api.login.aol.com/.well-known/openid-configuration
+  - openapi/aol-oauth2-api-openapi.yml
+- scope: email
+  description: Email address and the `email_verified` claim.
+  flows:
+  - authorizationCode
+  sources:
+  - https://api.login.aol.com/.well-known/openid-configuration
+  - openapi/aol-oauth2-api-openapi.yml
+evidence:
+- url: https://api.login.aol.com/.well-known/openid-configuration
+  status: 200
+  fetched: '2026-09-02'
