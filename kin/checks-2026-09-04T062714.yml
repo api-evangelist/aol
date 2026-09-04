@@ -1,16 +1,16 @@
 ---
 kin_checks:
   slug: aol
-  schema_version: 0.18.0
-  scored_at: '2026-09-01'
-  run_ts: 2026-09-01T222808
+  schema_version: 0.18.2
+  scored_at: '2026-09-04'
+  run_ts: 2026-09-04T062714
   note: Actionable checks only (missed + partial). earned/na are every other check
-    in rubric/scoring-0.18.0.yml; counts below let you verify that.
+    in rubric/scoring-0.18.2.yml; counts below let you verify that.
   counts:
     total: 132
-    earned: 38
-    partial: 10
-    missed: 58
+    earned: 44
+    partial: 8
+    missed: 54
     na: 26
   checks:
   - id: multiple_apis
@@ -59,17 +59,15 @@ kin_checks:
     status: missed
   - id: vocabulary_published
     status: missed
-  - id: conformance_declared
-    status: missed
   - id: overlay_published
     status: missed
   - id: change_log_present
     status: missed
-  - id: status_page_present
+  - id: rate_limits_documented
+    status: missed
+  - id: rate_limits_rich
     status: missed
   - id: deprecation_policy
-    status: missed
-  - id: security_disclosure
     status: missed
   - id: webhooks_advertised
     status: missed
@@ -77,7 +75,7 @@ kin_checks:
     status: missed
   - id: examples_published
     status: missed
-  - id: api_reference_present
+  - id: portal_present
     status: missed
   - id: sdk_count_1
     status: missed
@@ -89,23 +87,19 @@ kin_checks:
     status: missed
   - id: postman_present
     status: missed
-  - id: agent_skill_present
-    status: missed
-  - id: support_channel
-    status: missed
   - id: blog_present
     status: missed
-  - id: pricing_link
+  - id: plans_present
     status: missed
-  - id: sign_up_present
+  - id: plans_multiple
+    status: missed
+  - id: pricing_link
     status: missed
   - id: compliance_published
     status: missed
   - id: trust_center
     status: missed
   - id: reg_compliance_published
-    status: missed
-  - id: reg_standards_conformance
     status: missed
   - id: reversibility_documented
     status: missed
@@ -116,8 +110,6 @@ kin_checks:
   - id: openapi_examples
     status: missed
   - id: event_surface_described
-    status: missed
-  - id: agent_skills
     status: missed
   - id: well_known_catalog
     status: missed
@@ -137,22 +129,13 @@ kin_checks:
     status: partial
     earned: 2.5
     detail: 1 of 2 openapi documents pass
-  - id: rate_limits_documented
-    status: partial
-    earned: 2.0
-  - id: rate_limits_rich
-    status: partial
-    earned: 1.0
   - id: github_org_present
     status: partial
     earned: 1.0
     detail: pointer liveness 0.5
-  - id: plans_present
+  - id: agent_skill_present
     status: partial
-    earned: 2.0
-  - id: plans_multiple
-    status: partial
-    earned: 1.0
+    earned: 0.75
   - id: agentic_access
     status: partial
     earned: 2.5
@@ -165,6 +148,10 @@ kin_checks:
     status: partial
     earned: 3.5
     detail: 'grade: documented'
+  - id: agent_skills
+    status: partial
+    earned: 1.25
+    detail: 'authorship: derived'
   - id: delegated_identity
     status: partial
     earned: 3.0
