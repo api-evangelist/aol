@@ -90,7 +90,6 @@ apis:
   baseURL: https://api.login.aol.com
   tags:
   - Authentication
-  - OAuth2
   tags_raw:
   - OAuth2
   properties:
