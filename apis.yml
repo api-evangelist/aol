@@ -55,12 +55,11 @@ tags:
 apis:
 - name: Yahoo Developer Network (legacy documentation for the AOL identity stack)
   description: >-
-    AOL runs no developer portal of its own. App registration and the human
-    documentation for the OAuth 2.0 / OpenID Connect endpoints AOL serves at
-    api.login.aol.com live on the Yahoo Developer Network, because Yahoo Inc.
-    built and still operates a sibling deployment of the same Oath-era identity
-    platform at api.login.yahoo.com. This entry records that documentation
-    surface; the callable AOL contract is the two API entries below.
+    AOL runs no developer portal of its own. App registration and the human documentation for the OAuth
+    2.0 / OpenID Connect endpoints AOL serves at api.login.aol.com live on the Yahoo Developer Network,
+    because Yahoo Inc. built and still operates a sibling deployment of the same Oath-era identity platform
+    at api.login.yahoo.com. This entry records that documentation surface; the callable AOL contract is
+    the two API entries below.
   image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
   humanURL: https://developer.yahoo.com
   baseURL: https://api.login.yahoo.com
@@ -78,32 +77,12 @@ apis:
   contact:
   - FN: Yahoo Developer Support
     url: https://developer.yahoo.com/forum/
-- aid: aol:aol-oauth2-api
-  name: AOL OAuth2 API
-  description: >-
-    OAuth 2.0 Authorization Code grant endpoints served by AOL at
-    api.login.aol.com. Authorization, token exchange and refresh, plus the
-    revocation and introspection endpoints AOL declares in its own OpenID Connect
-    discovery document. Client authentication is client_secret_basic or
-    client_secret_post; there is no client-credentials or device flow.
-  humanURL: https://developer.yahoo.com/oauth2/guide/
-  baseURL: https://api.login.aol.com
-  tags:
-  - Authentication
-  tags_raw:
-  - OAuth2
-  properties:
-  - type: OpenAPI
-    url: openapi/aol-oauth2-api-openapi.yml
-  - type: Overlay
-    url: overlays/aol-oauth2-api-overlay.yaml
 - aid: aol:aol-openid-connect-api
   name: AOL OpenID Connect API
   description: >-
-    OpenID Connect userinfo and JWKS endpoints served by AOL at
-    api.login.aol.com under issuer https://api.login.aol.com. Standard claims
-    including sub, name, email, email_verified, locale, birthdate and auth_time;
-    ID tokens signed ES256 or RS256; AAL1/AAL2 assurance levels advertised.
+    OpenID Connect userinfo and JWKS endpoints served by AOL at api.login.aol.com under issuer https://api.login.aol.com.
+    Standard claims including sub, name, email, email_verified, locale, birthdate and auth_time; ID tokens
+    signed ES256 or RS256; AAL1/AAL2 assurance levels advertised.
   humanURL: https://developer.yahoo.com/oauth2/guide/openid_connect/
   baseURL: https://api.login.aol.com
   tags:
@@ -114,12 +93,24 @@ apis:
     url: openapi/aol-openid-connect-api-openapi.yml
   - type: Overlay
     url: overlays/aol-openid-connect-api-overlay.yaml
+- aid: aol:aol-oauth2-api
+  name: AOL O Auth2 API
+  description: OAuth 2.0 Authorization Code grant endpoints
+  humanURL: https://developer.yahoo.com
+  baseURL: https://api.login.yahoo.com
+  tags:
+  - OAuth2
+  properties:
+  - type: OpenAPI
+    url: openapi/aol-oauth2-api-openapi.yml
 maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
     X: apievangelist
     url: https://apievangelist.com
 common:
+  - type: Overlay
+    url: overlays/aol-oauth2-api-overlay.yaml
   - type: AgenticAccess
     url: agentic-access/aol-agentic-access.yml
   - type: Authentication
