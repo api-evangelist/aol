@@ -99,6 +99,8 @@ apis:
   humanURL: https://developer.yahoo.com
   baseURL: https://api.login.yahoo.com
   tags:
+  - Authentication
+  tags_raw:
   - OAuth2
   properties:
   - type: OpenAPI
