@@ -1,7 +1,9 @@
 ---
 title: Bending Spoons' Post
 url: https://www.linkedin.com/posts/bendingspoons_big-news-were-acquiring-aol-the-iconic-activity-7389337958274846720-grwP
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"AOL" press release artificial intelligence'
 position: 4
 source: serpapi-google

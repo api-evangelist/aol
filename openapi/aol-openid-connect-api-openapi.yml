@@ -1,26 +1,9 @@
 openapi: 3.2.0
 info:
-  title: Yahoo (formerly AOL) OAuth 2.0 and OAuth2 OpenID Connect API
+  title: Yahoo (formerly AOL) OAuth 2.0 OpenID Connect API
   description: 'Yahoo OAuth 2.0 and OpenID Connect endpoints used by developers building on
 
-    the Yahoo / former AOL identity platform. Following AOL''s acquisition by
-
-    Verizon and merger with Yahoo, AOL developer identity APIs have been
-
-    consolidated into the Yahoo Developer Network. The OAuth 2.0 Authorization
-
-    Code grant is the supported flow; OpenID Connect adds a userinfo endpoint
-
-    and a JWKS endpoint exposed at api.login.yahoo.com.
-
-
-    This specification is generated from the public Yahoo Developer Network
-
-    OAuth 2.0 / OpenID Connect documentation and the OpenID Connect discovery
-
-    document at https://login.yahoo.com/.well-known/openid-configuration.
-
-    '
+    the Yahoo / former AOL identity platform.'
   version: 1.0.0
   contact:
     name: Yahoo Developer Support
@@ -44,9 +27,7 @@ paths:
 
         carry a valid OAuth 2.0 access token issued with the `openid`
 
-        scope as a Bearer token.
-
-        '
+        scope as a Bearer token.'
       operationId: getUserInfo
       security:
       - bearerAuth: []
@@ -68,9 +49,7 @@ paths:
 
         should cache the keys and rotate based on `kid` values present in
 
-        the ID token header.
-
-        '
+        the ID token header.'
       operationId: getJwks
       responses:
         '200':

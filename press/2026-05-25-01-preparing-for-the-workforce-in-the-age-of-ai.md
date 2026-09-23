@@ -1,7 +1,9 @@
 ---
 title: Preparing for the workforce in the age of AI
 url: https://www.aol.com/news/preparing-workforce-age-ai-033320503.html
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"AOL" press release artificial intelligence'
 position: 1
 source: serpapi-google

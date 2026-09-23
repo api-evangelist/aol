@@ -1,7 +1,9 @@
 ---
 title: Bending Spoons' acquisition of AOL shows the value ...
 url: https://www.artificialintelligence-news.com/news/bending-spoons-acquisition-of-aol-shows-the-value-of-legacy-platforms/
-date: '2026-05-25'
+published: ''
+date_basis: harvested
+harvested: '2026-05-25'
 query: '"AOL" press release artificial intelligence'
 position: 5
 source: serpapi-google
