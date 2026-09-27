@@ -147,6 +147,13 @@ paths:
                 $ref: '#/components/schemas/Error'
 components:
   schemas:
+    Error:
+      type: object
+      properties:
+        error:
+          type: string
+        error_description:
+          type: string
     TokenResponse:
       type: object
       properties:
@@ -166,13 +173,6 @@ components:
         xoauth_yahoo_guid:
           type: string
           description: Yahoo GUID of the authenticated user
-    Error:
-      type: object
-      properties:
-        error:
-          type: string
-        error_description:
-          type: string
   securitySchemes:
     basicAuth:
       type: http
