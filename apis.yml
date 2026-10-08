@@ -111,6 +111,8 @@ maintainers:
     X: apievangelist
     url: https://apievangelist.com
 common:
+  - type: FinOps
+    url: finops/aol-finops.yml
   - url: https://www.aol.com/news/
     type: Blog
   - type: Overlay
