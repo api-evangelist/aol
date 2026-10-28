@@ -1,4 +1,4 @@
-# AOL (aol)
+# AOL
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -64,54 +64,147 @@
 > Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
 <!-- API-EVANGELIST-PROVENANCE:END -->
 
-AOL (America Online) is a digital media company and a division of Verizon Media (now Yahoo). AOL operates news and entertainment properties including AOL.com, Engadget, and TechCrunch. Historically, AOL provided developer APIs for advertising, content, and identity services that have since been consolidated into the Yahoo/Verizon Media API ecosystem.
+AOL is a consumer internet media and communications brand — AOL.com news, AOL Mail, AOL Search and AOL Desktop — operated by AOL Media LLC. Founded as America Online, it was acquired by Verizon in 2015, folded into Oath and then Yahoo, and sold on to the Italian software company Bending Spoons in 2026; the security.txt AOL serves today points its PGP key at bendingspoons.com. AOL runs no developer program and publishes no product API. Its one publicly callable, machine-readable contract is the OpenID Connect provider at api.login.aol.com, which serves a full discovery document under its own issuer and lets a third-party application sign a user in with their AOL account. The legacy developer documentation for that identity stack is hosted by Yahoo Inc., which runs a sibling deployment of the same Oath-era OAuth 2.0 / OIDC platform.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/aol/refs/heads/main/apis.yml)
+**Areas:** Digital Media · News · Entertainment · Advertising · Identity · OpenID Connect · Authentication · Email · Consumer Internet · Fortune 1000
 
-## Tags
+## AOL on APIs.io
 
-- Advertising
-- Digital Media
-- Entertainment
-- News
+Everything profiled for AOL is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/aol/](https://apis.io/providers/aol/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (3)
 
-- **Created:** 2026-03-23
-- **Modified:** 2026-04-19
+- [Yahoo Developer Network (legacy documentation for the AOL identity stack)](https://apis.io/apis/aol/yahoo-developer-network-legacy-documentation-for-the-aol-identity-stack/) — AOL runs no developer portal of its own. App registration and the human documentation for the OAuth 2.0 / OpenID Connect endpoints AOL serves at…
+- [AOL OpenID Connect API](https://apis.io/apis/aol/aol-openid-connect-api/) — OpenID Connect userinfo and JWKS endpoints served by AOL at api.login.aol.com under issuer https://api.login.aol.com. Standard claims including sub, name,…
+- [AOL O Auth2 API](https://apis.io/apis/aol/aol-oauth2-api/) — OAuth 2.0 Authorization Code grant endpoints
 
-## APIs
+### Published properties
 
-### Yahoo Developer Network (formerly AOL Developer)
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Following AOL's acquisition by Verizon and subsequent merger with Yahoo, AOL developer APIs have been consolidated into the Yahoo Developer Network. Yahoo/AOL APIs provide access to advertising services, weather, finance, search, and identity services for developers building on the Oath/Verizon Media platform.
+#### MCP servers (1)
 
-- **Human URL:** [https://developer.yahoo.com](https://developer.yahoo.com)
-- **Base URL:** `https://api.yahoo.com`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [aol-mcp.yml](https://apis.io/servers/aol/aol-mcp-yml/)
 
-- Advertising
-- Digital Media
-- Yahoo
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://developer.yahoo.com/)
-- [Getting Started](https://developer.yahoo.com/oauth2/guide/openid_connect/)
-- [Postman Collection](collections/aol.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/aol.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Aol Agentic Access](https://apis.io/agentic-access/aol/aol-agentic-access/)
 
-## Common Properties
+#### Collections (3)
 
-- [GitHub Organization](https://github.com/aol)
-- [LinkedIn](https://www.linkedin.com/company/aol)
-- [Portal](https://www.aol.com)
-- [Terms of Service](https://legal.yahoo.com/us/en/yahoo/terms/otos/index.html)
-- [Privacy Policy](https://legal.yahoo.com/us/en/yahoo/privacy/index.html)
+Postman and Open Collection request collections.
 
-## Maintainers
+- [Yahoo (formerly AOL) OAuth 2.0 and OpenID Connect API](https://apis.io/collections/aol/open-aol/)
+- [Yahoo (formerly AOL) OAuth 2.0 and OpenID Connect OAuth2 API](https://apis.io/collections/aol/open-aol-oauth2-api/)
+- [Yahoo (formerly AOL) OAuth 2.0 and OAuth2 OpenID Connect API](https://apis.io/collections/aol/open-aol-openid-connect-api/)
 
-**FN:** Kin Lane
-**Email:** info@apievangelist.com
-**URL:** https://apievangelist.com
+#### Overlays (2)
+
+OpenAPI overlays, including conversational phrasing for each operation.
+
+- [Aol Oauth2 Api Overlay](https://apis.io/overlays/aol/aol-oauth2-api-overlay/)
+- [Aol Openid Connect Api Overlay](https://apis.io/overlays/aol/aol-openid-connect-api-overlay/)
+
+#### Security (3)
+
+Authentication, trust centre, and vulnerability disclosure.
+
+- [Aol Authentication](https://apis.io/security/aol/aol-authentication/)
+- [Aol Domain Security](https://apis.io/security/aol/aol-domain-security/)
+- [Aol Vulnerability Disclosure](https://apis.io/security/aol/aol-vulnerability-disclosure/)
+
+#### OAuth scopes (1)
+
+The permissions the API asks for.
+
+- [Aol Scopes](https://apis.io/scopes/aol/aol-scopes/)
+
+#### Plans and pricing (1)
+
+Published plans, tiers and prices.
+
+- [Aol Plans Pricing](https://apis.io/plans/aol/aol-plans-pricing/)
+
+#### Rate limits (1)
+
+Published request limits.
+
+- [Aol Rate Limits](https://apis.io/rate-limits/aol/aol-rate-limits/)
+
+#### FinOps (1)
+
+What the API costs to run, by operation.
+
+- [Aol Finops](https://apis.io/finops/aol/aol-finops/)
+
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
+- [Website](https://www.aol.com)
+- [Sign up](https://login.aol.com/)
+- [Support](https://help.aol.com/)
+- [Blog](https://www.aol.com/news/)
+- [Terms of service](https://legal.aol.com/terms/index.html)
+- [Privacy policy](https://legal.aol.com/privacy/index.html)
+- [GitHub](https://github.com/aol)
+- [Status](https://status.aol.com/)
+
+## API Evangelist rating
+
+**Kin Score 44.6** — developing · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 73.2 |
+| Contract quality | 49.9 |
+| Contract governance | 18.2 |
+| Operational transparency | 28.9 |
+| Developer ergonomics | 44.6 |
+| Access clarity | 34.2 |
+
+**Agent readiness 36.1** — agent-ready
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | — |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | verified |
+| OpenAPI Examples | — |
+| Rate Limit Signal | documented (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | derived (partial credit) |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | — |
+| Dynamic Client Registration | — |
+| Agentic Commerce | — |
+| Pagination Ratio | na |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 40.2** — Horizontal (data, software, accessibility, platform)
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/aol/](https://apis.io/providers/aol/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for AOL: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/aol/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
